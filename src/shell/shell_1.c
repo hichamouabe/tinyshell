@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 22:14:52 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/10 23:39:58 by houabell         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:39:13 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_shell	*init_shell(char **envp)
 	shell->running = 1;
 	shell->heredoc_sigint = 0;
 	shell->input = NULL;
+	shell->variables = NULL;
 	return (shell);
 }
 
@@ -41,6 +42,8 @@ void	free_shell(t_shell *shell)
 		free_env(shell->env);
 	if (shell->input)
 		free(shell->input);
+	if (shell->variables)
+		free_var_info_list(shell->variables);
 	free(shell);
 }
 
@@ -60,6 +63,11 @@ void	reset_shell(t_shell *shell)
 	{
 		free(shell->input);
 		shell->input = NULL;
+	}
+	if (shell->variables)
+	{
+		free_var_info_list(shell->variables);
+		shell->variables = NULL;
 	}
 	shell->heredoc_sigint = 0;
 }

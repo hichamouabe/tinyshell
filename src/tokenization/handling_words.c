@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 00:15:01 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/15 03:58:23 by houabell         ###   ########.fr       */
+/*   Updated: 2025/05/18 09:32:38 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static int	handle_quote_in_word(char *input, int *i, int *start, \
 	t_quote_params	params;
 
 	if (input[*i] == '\'')
-		ctx->q_num = QUOTE_SINGLE;
+		ctx->shell->csqt = QUOTE_SINGLE;
 	else
-		ctx->q_num = QUOTE_DOUBLE;
+		ctx->shell->csqt = QUOTE_DOUBLE;
 	params.input = input;
 	params.i = i;
 	params.start = start;
@@ -59,7 +59,6 @@ static void	init_word_context(t_word_context *ctx, t_shell *shell)
 {
 	ctx->word = ft_strdup("");
 	ctx->token = NULL;
-	ctx->q_num = QUOTE_NONE;
 	ctx->shell = shell;
 }
 
@@ -77,7 +76,7 @@ static t_token	*finalize_word(char *input, int start, int *i, \
 		free(var_i_think);
 		return (NULL);
 	}
-	result = new_token(TOKEN_WORD, ctx->word, ctx->q_num);
+	result = new_token(TOKEN_WORD, ctx->word);
 	free(ctx->word);
 	free(var_i_think);
 	return (result);

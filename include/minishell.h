@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 04:51:41 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/15 00:08:46 by houabell         ###   ########.fr       */
+/*   Updated: 2025/05/18 09:42:50 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef enum e_token_type {
 typedef struct s_token {
 	t_token_type	type;
 	char	*value;
-	t_quote_type	quote_status;
 	struct s_token	*next;
 }	t_token;
 
@@ -62,8 +61,8 @@ typedef struct	s_env {
 typedef struct	s_var_info {
 	char	*name;
 	size_t	length;
-	int	expandable;
-	struct	s_var_info	*nex;
+	t_quote_type	quote_context;
+	struct	s_var_info	*next;
 }	t_var_info;
 
 typedef struct	s_redirect {
@@ -87,6 +86,7 @@ typedef struct	s_shell {
 	int	heredoc_sigint;
 	char	*input;
 	t_var_info	*variables;
+	t_quote_type	csqt;
 }	t_shell;
 
 typedef struct	s_exp_env {
@@ -114,7 +114,6 @@ typedef struct	s_quote_params {
 typedef struct s_word_context {
 	char	*word;
 	t_token	*token;
-	t_quote_type	q_num;
 	t_shell	*shell;
 }	t_word_context;
 #endif

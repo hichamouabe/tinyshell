@@ -6,14 +6,13 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 06:07:21 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/15 06:09:25 by houabell         ###   ########.fr       */
+/*   Updated: 2025/05/18 09:33:30 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token	*new_token(t_token_type type, char *value, \
-	t_quote_type q_status)
+t_token	*new_token(t_token_type type, char *value)
 {
 	t_token	*token;
 
@@ -27,7 +26,6 @@ t_token	*new_token(t_token_type type, char *value, \
 		free(token);
 		return (NULL);
 	}
-	token->quote_status = q_status;
 	token->next = NULL;
 	return (token);
 }
