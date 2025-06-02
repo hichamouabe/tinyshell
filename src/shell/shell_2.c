@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 22:29:17 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/12 15:57:28 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/02 02:42:10 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static	int	get_and_process_input(t_shell *shell)
 		if (!shell->input)
 			return (ERROR);
 		shell->tokens = tokenize(shell->input, shell);
+		if (shell->tokens)
+			print_tokens(shell->tokens);
 		return (SUCCESS);
 	}
 	free(prompt);
@@ -48,6 +50,22 @@ static int	process_command(t_shell *shell)
 		}
 	}
 	return (SUCCESS);
+}
+
+void	free_var_info_list(t_var_info *var_head)
+{
+	t_var_info	*current;
+	t_var_info	*next_node;
+
+	current = var_head;
+	while (current)
+	{
+		next_node = current->next;
+		if (current->name)
+			free(current->name);
+		free(current);
+		current = next_node;
+	}
 }
 
 int	minishell_loop(t_shell *shell)

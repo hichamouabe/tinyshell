@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:06:03 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/12 15:55:59 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/02 02:24:21 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,32 @@ static t_token	*get_next_token_from_input(char *input, int *i, t_shell *shell)
 	if (is_special(input[*i]))
 		new = handle_special(input, i);
 	else
-		new = handle_word(input, i);
+		new = handle_word(input, i, shell);
 	return (new);
+}
+
+char	*append_str(char *str, char *append)
+{
+	char	*result;
+	size_t	len1;
+	size_t	len2;
+
+	if (!str)
+		return (ft_strdup(append));
+	if (!append)
+		return (str);
+	len1 = ft_strlen(str);
+	len2 = ft_strlen(append);
+	result = (char *)malloc(len1 + len2 + 1);
+	if (!result)
+	{
+		free(result);
+		return (NULL);
+	}
+	ft_strcpy(result, str);
+	ft_strcat(result, append);
+	free(str);
+	return (result);
 }
 
 t_token	*tokenize(char *input, t_shell *shell)

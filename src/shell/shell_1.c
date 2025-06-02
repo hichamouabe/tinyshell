@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 22:14:52 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/16 16:39:13 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/02 01:04:51 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ t_shell	*init_shell(char **envp)
 	shell->input = NULL;
 	shell->variables = NULL;
 	return (shell);
+}
+
+int	validate_syntax(t_token *tokens)
+{
+	if (!tokens)
+		return (1);
+	if (!check_pipe_syntax(tokens))
+		return (0);
+	if (!check_redirection_syntax(tokens))
+		return (0);
+	return (1);
 }
 
 void	free_shell(t_shell *shell)

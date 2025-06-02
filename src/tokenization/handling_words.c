@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 00:15:01 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/18 09:32:38 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/02 04:28:07 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	handle_quote_in_word(char *input, int *i, int *start, \
 		free(ctx->word);
 		return (-1);
 	}
+	ctx->shell->csqt = QUOTE_NONE;
 	return (0);
 }
 
@@ -85,6 +86,7 @@ static t_token	*finalize_word(char *input, int start, int *i, \
 t_token	*handle_word(char *input, int *i, t_shell *shell)
 {
 	int		start;
+	char	*unquoted_seg;
 	t_word_context	ctx;
 
 	init_word_context(&ctx, shell);
@@ -96,11 +98,21 @@ t_token	*handle_word(char *input, int *i, t_shell *shell)
 	{
 		if (input[*i] == '\'' || input[*i] == '"')
 		{
+			if (*i > start)
+			{
+				unquoted_seg = ft_strndup(input + start, *i - start);
+				if (!unquoted_seg)
+					return (free(ctx.word), NULL);
+				shell->csqt = QUOTE_NONE;
+				log_expandable(shell, unquoted_seg);
+				free(unquoted_seg);
+			}
 			if (handle_quote_in_word(input, i, &start, &ctx) == -1)
 				return (NULL);
 		}
 		else
 			(*i)++;
 	}
+	shell->csqt = QUOTE_NONE;
 	return (finalize_word(input, start, i, &ctx));
 }

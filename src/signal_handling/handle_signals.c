@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:15:38 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/15 22:23:47 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/02 02:32:23 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	sigint_handler(int sig)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redispaly();
+	rl_redisplay();
 }
 
 void	sigquit_handler(int sig)

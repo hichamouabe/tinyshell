@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:52:10 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/11 01:02:43 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/02 02:12:40 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,24 @@ int	ft_isalnum(char c)
 	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
-}	
+}
+
+int	append_segment_to_word(char *input, int start, \
+		int current_i, char **word)
+{
+	char	*part;
+	char	*new_word;
+
+	if (current_i > start)
+	{
+		part = ft_strndup(&input[start], current_i - start);
+		if (!part)
+			return (-1);
+		new_word = append_str(*word, part);
+		free(part);
+		if (!new_word)
+			return (-1);
+		*word = new_word;
+	}
+	return (0);
+}

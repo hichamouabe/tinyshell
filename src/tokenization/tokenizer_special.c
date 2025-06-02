@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 01:06:07 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/18 09:57:24 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/02 02:50:44 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ t_token	*handle_special(char *input, int *i)
 	if (input[*i] == '|')
 		token = handle_pipe(input, i);
 	else if (input[*i] == '<')
-		token = hande_redir_in(input, i);
-	else if (input[*i] == '<')
+		token = handle_redir_in(input, i);
+	else if (input[*i] == '>')
 		token = handle_redir_out(input, i);
 	else
 		return (NULL);
