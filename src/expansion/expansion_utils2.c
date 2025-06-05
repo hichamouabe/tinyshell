@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 00:28:52 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 00:35:14 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/04 06:51:39 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ void	add_segment(char ***result, char *segment)
 	int		i;
 	char	**new_arr;
 
-	if (!result || !segment)
+	if (!result)
+	{
+		if (segment)
+			free(segment);
+	}
+	if (!segment)
 		return ;
 	i = 0;
 	if (*result)

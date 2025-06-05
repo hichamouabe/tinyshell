@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 04:51:41 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 03:40:31 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:31:02 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef enum e_token_type {
 typedef struct s_token {
 	t_token_type	type;
 	char	*value;
+	int	is_heredoc_delimiter_value;
+	int	original_delimiter_had_quotes;
 	struct s_token	*next;
 }	t_token;
 
@@ -101,6 +103,7 @@ typedef struct s_word_context {
 	char	*word;
 	t_token	*token;
 	t_shell	*shell;
+	int	expect_delimiter;
 }	t_word_context;
 
 typedef struct s_expansion_state
@@ -109,6 +112,12 @@ typedef struct s_expansion_state
 	char	*buffer;
 	int		i;
 }	t_expansion_state;
+typedef struct	s_word_state {
+	char	*input;
+	int	start_word;
+	int	start_seg;
+	int	*i;
+}	t_word_state;
 
 extern volatile int g_signal_status; // Needs definition in a .c file
 
@@ -119,7 +128,7 @@ void			reset_shell(t_shell *shell);
 int				minishell_loop(t_shell *shell);
 int				validate_syntax(t_token *tokens);
 void			free_var_info_list(t_var_info *var_head);
-void			excute_commands(t_shell *shell); // Dummy for now
+void			execute_commands(t_shell *shell); // Dummy for now
 int				check_pipe_syntax(t_token *tokens); // Missing
 int				check_redirection_syntax(t_token *tokens); // Missing
 void			free_commands(t_command *commands); // Missing
@@ -131,7 +140,7 @@ void			add_token(t_token **tokens, t_token *new);
 void			free_tokens(t_token *tokens);
 int				handle_quotes(char *input, int *i, char **value);
 t_token			*handle_special(char *input, int *i);
-t_token			*handle_word(char *input, int *i, t_shell *shell);
+t_token			*handle_word(char *input, int *i, t_shell *shell, int expect_deli);
 int				is_special(char c);
 int				is_whitespace(char c);
 int				is_redirection(t_token_type type);
@@ -178,7 +187,11 @@ void			log_expandable(t_shell *shell, char *segment);
 t_var_info		*create_var_node(char *name, t_quote_type context_csqt);
 void			add_var_node(t_var_info **var_head, t_var_info *new_node);
 void			free_var(t_var_info *var_head); // Defined in var_logging_utils.c, may or may not be used globally
-
+int	handle_quoted_part(t_quote_params *params, int expect_deli);
+int	handle_quote_in_word(char *input, int *i, int *start, t_word_context *ctx);
+void	init_word_context(t_word_context *ctx, t_shell *shell);
+t_token	*finalize_word(char *input, int start, int *i, t_word_context *ctx);
+int	segment_has_any_actual_quotes(const char *segment_str, int len);
 
 void			print_variables(t_var_info *variables);
 

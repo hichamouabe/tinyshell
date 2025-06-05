@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 20:28:50 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/31 20:47:52 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:19:40 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,15 @@ char	**expand_token_value(char *str, t_var_info **var_list, t_shell *shell)
 		if (is_variable_start(str, state.i, var_list))
 			process_variable_expansion(str, &state, var_list, shell);
 		else
-			process_regular_text(str, &state);
+		{
+			if (str[state.i] == '$')
+			{
+				append_segment(&state.buffer, "$");
+				state.i++;
+			}
+			else
+				process_regular_text(str, &state);
+		}
 	}
 	return (finalize_expansion(&state));
 }

@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 02:03:04 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 02:03:34 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/04 02:06:41 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void create_commands(t_shell *shell)
  * @param shell The shell structure, which would normally contain commands
  *              to be executed.
  */
-void excute_commands(t_shell *shell)
+void execute_commands(t_shell *shell)
 {
 	// To avoid unused parameter warnings
 	(void)shell;

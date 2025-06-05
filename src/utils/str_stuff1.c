@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 01:23:30 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 01:25:27 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:35:12 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
+	if (s == NULL)
+		return (0);
 	len = 0;
 	while (s[len])
 	{
@@ -30,6 +32,8 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 	char	*ptr;
 
+	if (s1 == NULL)
+		return (NULL);
 	len = ft_strlen(s1);
 	ptr = malloc(len + 1);
 	i = 0;

@@ -32,6 +32,7 @@ SRCS = \
 	$(TOKEN_DIR)tokenizer_core.c \
 	$(TOKEN_DIR)tokenizer_special.c \
 	$(TOKEN_DIR)handling_words.c \
+	$(TOKEN_DIR)handling_words_utils.c \
 	$(TOKEN_DIR)is_x.c \
 	$(TOKEN_DIR)debug.c \
 	$(EXP_DIR)parsing_main.c \
@@ -40,6 +41,7 @@ SRCS = \
 	$(EXP_DIR)expansion_process.c \
 	$(EXP_DIR)expansion_context.c \
 	$(EXP_DIR)expansion_splitting.c \
+	$(EXP_DIR)distribute_split.c \
 	$(EXP_DIR)expansion_error.c \
 	$(EXP_DIR)process_each_token_utils.c \
 	$(EXP_DIR)log_var_main.c \

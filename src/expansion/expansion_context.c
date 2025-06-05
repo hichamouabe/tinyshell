@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:55:08 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 22:50:25 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:31:40 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,11 @@ void	handle_double_quote_context(t_expansion_state *state, \
 		append_segment(&state->buffer, expanded_value);
 }
 
-/*void	handle_unquoted_context(t_expansion_state *state, \
-		char *expanded_value)
-{
-	flush_buffer_to_result(state);
-	if (!*expanded_value)
-		return ;
-	process_word_splitting(state, expanded_value);
-}*/ 
-
 void	handle_unquoted_context(t_expansion_state *state, char *expanded_value)
 {
-
 	if (!*expanded_value && !(state->buffer && *(state->buffer)))
 	{
-		return;
+		return ;
 	}
 	process_word_splitting(state, expanded_value);
 }

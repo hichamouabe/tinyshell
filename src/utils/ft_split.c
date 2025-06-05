@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 01:33:35 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 01:34:18 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:44:09 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static size_t	ft_count(const char *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] != c && (i == 0 || s[i - 1] == c))
+		if (s[i] != c && s[i] != '\t' && \
+				(i == 0 || s[i - 1] == c || s[i - 1] == '\t'))
 			count++;
 		i++;
 	}
@@ -40,10 +41,10 @@ static char	**ft_devider(char **result, const char *s, char c, size_t count)
 	k = 0;
 	while (s[i] && k < count)
 	{
-		if (s[i] != c)
+		if (s[i] != c && s[i] != '\t')
 		{
 			j = i;
-			while (s[j] && s[j] != c)
+			while (s[j] && s[j] != c && s[j] != '\t')
 				j++;
 			result[k] = ft_substr(s, i, j - i);
 			if (!result[k++])

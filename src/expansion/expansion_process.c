@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 20:48:52 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 03:23:11 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:46:42 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	process_variable_expansion(char *str, t_expansion_state *state, \
 	}
 	else
 	{
-
 		expanded_value = get_env_value(var_name, shell);
 		if (!expanded_value)
 			return (handle_expansion_failure(state, var_name));

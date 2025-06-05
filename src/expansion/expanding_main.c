@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:09:56 by houabell          #+#    #+#             */
-/*   Updated: 2025/05/30 00:11:37 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:30:21 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,31 @@ void	process_each_token(t_token **token, t_var_info **var, t_shell *shell)
 	insert_remaining_tokens(*token, new_list);
 	free(first_to_free->value);
 	free(first_to_free);
-	free(segments);
+	free_array(segments);
 }
 
 void	expand_variables(t_shell *shell)
 {
-	t_token		*current_tok;
-	t_var_info	*current_var;
+	t_token		*cur_token;
+	t_var_info	*var_list;
 
-	current_tok = shell->tokens;
-	current_var = shell->variables;
-	while (current_tok && current_var)
+	cur_token = shell->tokens;
+	var_list = shell->variables;
+	while (cur_token != NULL)
 	{
-		if (current_tok->type == TOKEN_WORD && has_variable(current_tok))
-			process_each_token(&current_tok, &current_var, shell);
+		if (cur_token->is_heredoc_delimiter_value)
+		{
+			cur_token = cur_token->next;
+		}
+		else if (cur_token->type == TOKEN_WORD
+			&& has_variable(cur_token))
+		{
+			process_each_token(&cur_token, &var_list, shell);
+			cur_token = cur_token->next;
+		}
 		else
-			current_tok = current_tok->next;
+		{
+			cur_token = cur_token->next;
+		}
 	}
 }
