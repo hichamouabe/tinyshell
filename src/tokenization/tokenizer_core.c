@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 06:07:21 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/05 17:44:03 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/05 22:50:43 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_token	*new_token(t_token_type type, char *value)
 	}
 	token->is_heredoc_delimiter_value = 0;
 	token->original_delimiter_had_quotes = 0;
+	token->is_from_redir = 0;
 	token->next = NULL;
 	return (token);
 }

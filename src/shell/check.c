@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 01:57:51 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 02:21:47 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/06 01:30:41 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,32 @@ int	check_pipe_syntax(t_token *tokens)
 		is_first = 0;
 	}
 	return (1);
+}
+
+int	check_ambig(t_shell *shell)
+{
+	t_token	*current;
+	t_token	*prev;
+
+	current = shell->tokens;
+	prev = NULL;
+	while (current)
+	{
+		if (prev && is_redirection(prev->type) && current->value[0] == '\0')
+		{
+			printf("minishell: No such file or directory\n");
+			shell->exit_status = 1;
+			return (ERROR);
+		}
+		if (current->is_from_redir && current->next && \
+					current->next->is_from_redir)
+		{
+			printf("minishell: ambiguous redirect\n");
+			shell->exit_status = 1;
+			return (ERROR);
+		}
+		prev = current;
+		current = current->next;
+	}
+	return (SUCCESS);
 }

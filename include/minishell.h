@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 04:51:41 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/05 20:31:02 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/06 00:19:00 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_token {
 	char	*value;
 	int	is_heredoc_delimiter_value;
 	int	original_delimiter_had_quotes;
+	int	is_from_redir;
 	struct s_token	*next;
 }	t_token;
 
@@ -132,7 +133,7 @@ void			execute_commands(t_shell *shell); // Dummy for now
 int				check_pipe_syntax(t_token *tokens); // Missing
 int				check_redirection_syntax(t_token *tokens); // Missing
 void			free_commands(t_command *commands); // Missing
-
+int	check_ambig(t_shell *shell);
 // Tokenization (src/tokenization)
 t_token			*tokenize(char *input, t_shell *shell);
 t_token			*new_token(t_token_type type, char *value);
@@ -175,8 +176,8 @@ void			cleanup_expansion_step(char *var_name, char *expanded_value, t_var_info *
 void			handle_extraction_failure(t_expansion_state *state, t_var_info **var_list); // Note: Original uses (*var_list)->value, should be name
 void			handle_expansion_failure(t_expansion_state *state, char *var_name);  // Note: Original uses (*var_list)->value, should be name
 int				has_variable(t_token *token);
-void			process_each_token(t_token **token, t_var_info **var, t_shell *shell);
-t_token			*create_token_list(char **segments);
+void			process_each_token(t_token **token, t_var_info **var, t_shell *shell, int is_from_redir);
+t_token			*create_token_list(char **segments, int is_from_redir);
 t_token			*get_last_token(t_token *token_list);
 void			replace_first_token(t_token *original, t_token *new_first);
 void			insert_remaining_tokens(t_token *original, t_token *new_list);

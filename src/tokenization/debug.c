@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 02:39:24 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/04 02:39:11 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/06 00:02:20 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void print_tokens(t_token *tokens) {
         if (current->type == TOKEN_WORD) { // These flags are most relevant for WORD tokens that might be delimiters
             printf("  Is Heredoc Deli: %d\n", current->is_heredoc_delimiter_value);
             printf("  Deli Had Quotes: %d\n", current->original_delimiter_had_quotes);
+	    printf("  Is Redirect Target: %d\n", current->is_from_redir);
         }
         current = current->next;
     }
