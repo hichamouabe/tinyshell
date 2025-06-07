@@ -27,6 +27,8 @@ t_shell	*init_shell(char **envp)
 	shell->heredoc_sigint = 0;
 	shell->input = NULL;
 	shell->variables = NULL;
+	shell->heredoc_files = NULL;
+	shell->heredoc_count = 0;
 	return (shell);
 }
 

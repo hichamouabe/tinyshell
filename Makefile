@@ -16,6 +16,7 @@ SHELL_DIR = $(SRC_DIR)shell/
 TOKEN_DIR = $(SRC_DIR)tokenization/
 EXP_DIR = $(SRC_DIR)expansion/
 ENV_DIR = $(SRC_DIR)env_handling/
+HEREDOC_DIR = $(SRC_DIR)heredoc/
 SIGNAL_DIR = $(SRC_DIR)signal_handling/
 UTIL_DIR = $(SRC_DIR)utils/
 
@@ -56,6 +57,10 @@ SRCS = \
 	$(UTIL_DIR)str_stuff3.c \
 	$(UTIL_DIR)str_stuff4.c \
 	$(UTIL_DIR)ft_split.c \
+	$(HEREDOC_DIR)expand_heredoc_line.c \
+	$(HEREDOC_DIR)generate_heredoc_filename.c \
+	$(HEREDOC_DIR)handle_heredocs.c \
+	$(HEREDOC_DIR)read_heredoc.c \
 
 # Object Files
 OBJS = $(SRCS:.c=.o)

@@ -29,6 +29,7 @@
 
 # define SUCCESS 0
 # define ERROR 1
+# define MAX_HEREDOCS 16
 
 typedef enum e_quote_type {
 	QUOTE_NONE,
@@ -90,6 +91,8 @@ typedef struct	s_shell {
 	char	*input;
 	t_var_info	*variables;
 	t_quote_type	csqt;
+	char	**heredoc_files;
+	int	heredoc_count;
 }	t_shell;
 
 typedef struct	s_quote_params {
@@ -227,4 +230,9 @@ void			free_array(char **array);
 char			*ft_strcpy(char *dst, const char *src); // Missing
 char			*ft_strcat(char *dst, const char *src); // Missing
 void			*ft_memcpy(void *dst, const void *src, size_t n); // Missing
+// Heredoc functions
+char	*expand_heredoc_line(char *line, t_shell *shell);
+char	*generate_heredoc_filename(t_shell *shell);
+int	handle_heredocs(t_shell *shell);
+int	read_heredoc_input(char *delimiter, int expand, t_shell *shell);
 #endif

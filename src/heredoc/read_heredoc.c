@@ -1,0 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*      read_heredoc.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/06 10:55:05 by houabell          #+#    #+#             */
+/*   Updated: 2025/06/07 16:06:12 by houabell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+
+static int	create_heredoc_file(t_shell *shell)
+{
+	char	*temp_filename;
+	int		fd;
+
+	temp_filename = generate_heredoc_filename(shell);
+	if (!temp_filename)
+		return (-1);
+	fd = open(temp_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);	
+	return (fd);
+}
+
+static int	should_stop_heredoc(char *line, char *delimiter)
+{
+	if (!line || ft_strcmp(line, delimiter) == 0)
+		return (1);
+	return (0);
+}
+
+static char	*process_heredoc_line(char *line, int expand, t_shell *shell)
+{
+	char	*expanded;
+
+	if (expand)
+	{
+		expanded = expand_heredoc_line(line, shell);
+		free(line);
+		return (expanded);
+	}
+	return (line);
+}
+
+static void	write_line_to_file(int fd, char *line)
+{
+	write(fd, line, ft_strlen(line));
+	write(fd, "\n", 1);
+}
+
+int	read_heredoc_input(char *delimiter, int expand, t_shell *shell)
+{
+	char	*line;
+	int		fd;
+
+	fd = create_heredoc_file(shell);
+	if (fd == -1)
+		return (ERROR);
+	while (1)
+	{
+		line = readline("> ");
+		if (should_stop_heredoc(line, delimiter))
+		{
+			if (line)
+				free(line);
+			break ;
+		}
+		line = process_heredoc_line(line, expand, shell);
+		write_line_to_file(fd, line);
+		free(line);
+	}
+	close(fd);
+	return (SUCCESS);
+}

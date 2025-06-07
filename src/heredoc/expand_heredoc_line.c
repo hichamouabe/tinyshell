@@ -33,6 +33,7 @@ static char	*handle_variable_expansion(char *line, int *i, t_shell *shell)
 		(*i)++;
 		return (var_value);
 	}
+	return (ft_strdup("$"));
 }
 
 static char	*append_literal_part(char *final_line, char *line, int start, int end)
@@ -51,6 +52,8 @@ static char	*append_literal_part(char *final_line, char *line, int start, int en
 static char	*process_dollar_sign(char *final_line, char *line, int *i, \
 		t_shell *shell)
 {
+	char	*var_value;
+
 	var_value = handle_variable_expansion(line, i, shell);
 	final_line = append_str(final_line, var_value);
 	free(var_value);

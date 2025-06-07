@@ -24,6 +24,8 @@ t_command	*parse_tokens(t_shell	*shell)
 		}
 		if (check_ambig(shell) != SUCCESS)
 			return (NULL);
+		if (handle_heredocs(shell) != SUCCESS)
+			return (NULL);
 		create_commands(shell);
 		return (shell->commands);
 	}
