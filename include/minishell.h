@@ -210,7 +210,7 @@ t_env			*get_env_node(t_env *env, char *key);
 void			handle_signals(void);
 void			sigint_handler(int sig);
 void			sigquit_handler(int sig);
-void			signint_heredoc_handler(int sig); // Typo in original name
+void			sigint_heredoc_handler(int sig); // Typo in original name
 
 // Utilities (src/utils)
 size_t			ft_strlen(const char *s);

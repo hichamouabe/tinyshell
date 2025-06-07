@@ -43,8 +43,11 @@ static char	*append_literal_part(char *final_line, char *line, int start, int en
 	if (end > start)
 	{
 		part = ft_strndup(&line[start], end - start);
-		final_line = append_str(final_line, part);
-		free(part);
+		if (part)
+		{
+			final_line = append_str(final_line, part);
+			free(part);
+		}
 	}
 	return (final_line);
 }

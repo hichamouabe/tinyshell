@@ -58,9 +58,13 @@ int	read_heredoc_input(char *delimiter, int expand, t_shell *shell)
 	fd = create_heredoc_file(shell);
 	if (fd == -1)
 		return (ERROR);
+	g_signal_status = 0;
+	signal(SIGINT, sigint_heredoc_handler);
 	while (1)
 	{
 		line = readline("> ");
+		if (g_signal_status == 1)
+			break ;
 		if (should_stop_heredoc(line, delimiter))
 		{
 			if (line)
@@ -71,6 +75,7 @@ int	read_heredoc_input(char *delimiter, int expand, t_shell *shell)
 		write_line_to_file(fd, line);
 		free(line);
 	}
+	signal(SIGINT, sigint_handler);
 	close(fd);
 	return (SUCCESS);
 }

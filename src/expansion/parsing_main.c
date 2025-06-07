@@ -26,6 +26,9 @@ t_command	*parse_tokens(t_shell	*shell)
 			return (NULL);
 		if (handle_heredocs(shell) != SUCCESS)
 			return (NULL);
+		printf("--- [DEBUG] final tokens list before creating the commands: ---\n");
+		print_tokens(shell->tokens);
+		// --> hna asat ghadi t9ad commands linked list btari9tk
 		create_commands(shell);
 		return (shell->commands);
 	}
