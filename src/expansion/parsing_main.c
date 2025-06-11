@@ -26,10 +26,12 @@ t_command	*parse_tokens(t_shell	*shell)
 			return (NULL);
 		if (handle_heredocs(shell) != SUCCESS)
 			return (NULL);
-		printf("--- [DEBUG] final tokens list before creating the commands: ---\n");
+		printf("--- [DEBUG] the tokens after the heredoc function processing: ---\n");
 		print_tokens(shell->tokens);
 		// --> hna asat ghadi t9ad commands linked list btari9tk
+		printf("--- [DEBUG] final parsed commands: ---\n");
 		create_commands(shell);
+		print_commands(shell->commands);
 		return (shell->commands);
 	}
 	return (NULL);

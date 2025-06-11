@@ -28,6 +28,7 @@ void	create_commands(t_shell *shell)
 		{
 			free_commands(shell->commands);
 			shell->commands = NULL;
+			return ;
 		}
 		if (last_cmd == NULL)
 			shell->commands = new_cmd;

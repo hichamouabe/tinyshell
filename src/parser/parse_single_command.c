@@ -33,7 +33,7 @@ static void	populate_cmd_from_tokens(t_command *cmd, t_token **tokens)
 	cmd->args[i] = NULL;
 }
 
-static t_commad	*init_command(t_token *tokens)
+static t_command	*init_command(t_token *tokens)
 {
 	t_command	*cmd;
 	int			arg_count;
@@ -53,7 +53,7 @@ static t_commad	*init_command(t_token *tokens)
 
 t_command	*parse_single_command(t_token **tokens)
 {
-	t_commad	*cmd;
+	t_command	*cmd;
 
 	if (!*tokens)
 		return (NULL);

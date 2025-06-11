@@ -25,19 +25,7 @@
  * @param shell The shell structure, which would normally contain tokens
  *              to be parsed and would be populated with commands.
  */
-void create_commands(t_shell *shell)
-{
-	// To avoid unused parameter warnings
-	(void)shell;
 
-	// In a real implementation, this function would:
-	// 1. Iterate through shell->tokens.
-	// 2. Group tokens into t_command structures.
-	// 3. Populate command arguments (char **args).
-	// 4. Populate command redirections (t_redirect *redirects).
-	// 5. Link t_command structures into a list (shell->commands).
-	// printf("DEBUG: create_commands (dummy) called.\n");
-}
 
 /**
  * @brief Dummy function for executing commands.
@@ -82,37 +70,66 @@ void execute_commands(t_shell *shell)
  *
  * @param commands A pointer to the head of the command list.
  */
-void free_commands(t_command *commands)
+static const char	*redirect_type_to_string(t_token_type type)
 {
-	// To avoid unused parameter warnings
-	(void)commands;
+	if (type == TOKEN_REDIR_IN)
+		return ("< (IN)");
+	if (type == TOKEN_REDIR_OUT)
+		return ("> (OUT)");
+	if (type == TOKEN_REDIR_APPEND)
+		return (">> (APPEND)");
+	if (type == TOKEN_HEREDOC)
+		return ("<< (HEREDOC)");
+	return ("UNKNOWN REDIR");
+}
 
-	// In a real implementation, this function would:
-	// t_command *current = commands;
-	// t_command *next_cmd;
-	// while (current)
-	// {
-	//     next_cmd = current->next;
-	//     // Free current->args (it's a char **, so free each string then the array)
-	//     if (current->args)
-	//     {
-	//         for (int i = 0; current->args[i]; i++)
-	//             free(current->args[i]);
-	//         free(current->args);
-	//     }
-	//     // Free current->redirects (iterate through the t_redirect list)
-	//     t_redirect *redir = current->redirects;
-	//     t_redirect *next_redir;
-	//     while (redir)
-	//     {
-	//         next_redir = redir->next;
-	//         if (redir->file)
-	//             free(redir->file);
-	//         free(redir);
-	//         redir = next_redir;
-	//     }
-	//     free(current);
-	//     current = next_cmd;
-	// }
-	// printf("DEBUG: free_commands (dummy) called.\n");
+/**
+ * @brief Prints the parsed command list for debugging.
+ */
+void	print_commands(t_command *commands)
+{
+	t_command	*current_cmd;
+	t_redirect	*current_redir;
+	int			i;
+	int			j;
+
+	printf("\n--- Parsed Commands ---\n");
+	current_cmd = commands;
+	i = 0;
+	if (!current_cmd)
+	{
+		printf("(no commands parsed)\n");
+		printf("-----------------------\n\n");
+		return ;
+	}
+	while (current_cmd)
+	{
+		printf("Command %d:\n", i++);
+		j = 0;
+		while (current_cmd->args && current_cmd->args[j])
+		{
+			printf("  Arg[%d]: [%s]\n", j, current_cmd->args[j]);
+			j++;
+		}
+		if (j == 0)
+			printf("  (no arguments)\n");
+		current_redir = current_cmd->redirects;
+		if (!current_redir)
+			printf("  (no redirections)\n");
+		else
+		{
+			printf("  Redirections:\n");
+			while (current_redir)
+			{
+				printf("    - Type: %-15s File: [%s]\n",
+					redirect_type_to_string(current_redir->type),
+					current_redir->file);
+				current_redir = current_redir->next;
+			}
+		}
+		current_cmd = current_cmd->next;
+		if (current_cmd)
+			printf("  | (pipe to next command)\n");
+	}
+	printf("-----------------------\n\n");
 }

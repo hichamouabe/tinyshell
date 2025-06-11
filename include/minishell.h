@@ -198,7 +198,7 @@ t_token	*finalize_word(char *input, int start, int *i, t_word_context *ctx);
 int	segment_has_any_actual_quotes(const char *segment_str, int len);
 
 void			print_variables(t_var_info *variables);
-
+void			print_commands(t_command *commands);
 // Environment Handling (src/env_handling)
 t_env			*init_env(char **envp);
 void			free_env(t_env *env);
@@ -235,4 +235,12 @@ char	*expand_heredoc_line(char *line, t_shell *shell);
 char	*generate_heredoc_filename(t_shell *shell);
 int	handle_heredocs(t_shell *shell);
 int	read_heredoc_input(char *delimiter, int expand, t_shell *shell);
+
+//command
+t_command	*parse_single_command(t_token **tokens);
+void	add_redirect(t_command *cmd, t_token_type type, char *filename);
+void	count_args_and_redirs(t_token *start, int *arg_c, int *redir_c);
+void	create_commands(t_shell *shell);
+t_command       *parse_single_command(t_token **tokens);
+void	free_commands(t_command *cmd);
 #endif

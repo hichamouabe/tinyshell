@@ -1,10 +1,7 @@
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g # -g for debugging, remove for release
-# If you are using the readline library from a non-standard location, you might need:
-# CFLAGS += -I/path/to/readline/include
-# LDFLAGS += -L/path/to/readline/lib
-LDFLAGS = -lreadline # Common linker flag for readline
+CFLAGS = -Wall -Wextra -Werror -g
+LDFLAGS = -lreadline
 
 # Project Name
 NAME = minishell
@@ -17,18 +14,18 @@ TOKEN_DIR = $(SRC_DIR)tokenization/
 EXP_DIR = $(SRC_DIR)expansion/
 ENV_DIR = $(SRC_DIR)env_handling/
 HEREDOC_DIR = $(SRC_DIR)heredoc/
+PARSER_DIR = $(SRC_DIR)parser/
 SIGNAL_DIR = $(SRC_DIR)signal_handling/
 UTIL_DIR = $(SRC_DIR)utils/
 
-# Source Files
-# Note: Order doesn't strictly matter for SRCS, but it's good for organization.
+# Source Files - ALL .c files must be listed here
 SRCS = \
 	$(SHELL_DIR)main.c \
 	$(SHELL_DIR)shell_1.c \
-	$(EXP_DIR)debug.c \
 	$(SHELL_DIR)shell_2.c \
 	$(SHELL_DIR)check.c \
 	$(SHELL_DIR)dummy.c \
+	\
 	$(TOKEN_DIR)tokenizer_main.c \
 	$(TOKEN_DIR)tokenizer_core.c \
 	$(TOKEN_DIR)tokenizer_special.c \
@@ -36,6 +33,7 @@ SRCS = \
 	$(TOKEN_DIR)handling_words_utils.c \
 	$(TOKEN_DIR)is_x.c \
 	$(TOKEN_DIR)debug.c \
+	\
 	$(EXP_DIR)parsing_main.c \
 	$(EXP_DIR)expanding_main.c \
 	$(EXP_DIR)expand_token_value.c \
@@ -49,49 +47,60 @@ SRCS = \
 	$(EXP_DIR)var_logging_utils.c \
 	$(EXP_DIR)expansion_utils1.c \
 	$(EXP_DIR)expansion_utils2.c \
+	$(EXP_DIR)debug.c \
+	\
 	$(ENV_DIR)environement_main.c \
 	$(ENV_DIR)environement_utils.c \
+	\
+	$(HEREDOC_DIR)handle_heredocs.c \
+	$(HEREDOC_DIR)read_heredoc.c \
+	$(HEREDOC_DIR)generate_heredoc_filename.c \
+	$(HEREDOC_DIR)expand_heredoc_line.c \
+	\
+	$(PARSER_DIR)parser.c \
+	$(PARSER_DIR)parser_utils.c \
+	$(PARSER_DIR)parse_single_command.c \
+	$(PARSER_DIR)free_stuff_brikolag.c \
+	\
 	$(SIGNAL_DIR)handle_signals.c \
+	\
 	$(UTIL_DIR)str_stuff1.c \
 	$(UTIL_DIR)str_stuff2.c \
 	$(UTIL_DIR)str_stuff3.c \
 	$(UTIL_DIR)str_stuff4.c \
-	$(UTIL_DIR)ft_split.c \
-	$(HEREDOC_DIR)expand_heredoc_line.c \
-	$(HEREDOC_DIR)generate_heredoc_filename.c \
-	$(HEREDOC_DIR)handle_heredocs.c \
-	$(HEREDOC_DIR)read_heredoc.c \
+	$(UTIL_DIR)ft_split.c
 
-# Object Files
+# Object Files - This automatically generates the list of .o files
 OBJS = $(SRCS:.c=.o)
 
-# Include header directory
-CFLAGS += -I$(INCLUDE_DIR)
+# --- THE RULES ---
 
 # Default rule
 all: $(NAME)
 
-# Rule to link object files into the executable
+# Rule to link ALL object files into the final executable
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 	@echo "Minishell compiled!"
 
-# Rule to compile .c files into .o files
-%.o: %.c $(INCLUDE_DIR)minishell.h
-	$(CC) $(CFLAGS) -c $< -o $@
+# Rule to compile any .c file into a .o file
+# This is a pattern rule.
+# -c means "compile only, don't link"
+# -I tells the compiler where to find header files
+%.o: %.c
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 
-# Clean rule: removes object files
+# --- CLEANUP RULES ---
+
 clean:
 	rm -f $(OBJS)
 	@echo "Object files cleaned."
 
-# Fclean rule: removes object files and the executable
 fclean: clean
 	rm -f $(NAME)
 	@echo "All cleaned."
 
-# Re rule: forces recompilation
 re: fclean all
 
-# Phony targets: targets that are not actual files
+# Phony targets: these are not files
 .PHONY: all clean fclean re

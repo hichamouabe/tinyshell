@@ -15,7 +15,7 @@
 void	count_args_and_redirs(t_token *start, int *arg_c, int *redir_c)
 {
 	*arg_c = 0;
-	redir_c = 0;
+	*redir_c = 0;
 	while (start && start->type != TOKEN_PIPE)
 	{
 		if (start->type == TOKEN_WORD)
@@ -30,12 +30,12 @@ void	count_args_and_redirs(t_token *start, int *arg_c, int *redir_c)
 	}
 }
 
-void	add_redirect(t_command *cmd, t_token_type type, chat *filename)
+void	add_redirect(t_command *cmd, t_token_type type, char *filename)
 {
 	t_redirect	*new_redir;
 	t_redirect	*current;
 
-	new_redi = malloc(sizeof(t_redirect));
+	new_redir = malloc(sizeof(t_redirect));
 	if (!new_redir)
 		return ;
 	new_redir->type = type;
