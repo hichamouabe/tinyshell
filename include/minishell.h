@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 04:51:41 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/06 00:19:00 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/12 01:45:52 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,4 +243,9 @@ void	count_args_and_redirs(t_token *start, int *arg_c, int *redir_c);
 void	create_commands(t_shell *shell);
 t_command       *parse_single_command(t_token **tokens);
 void	free_commands(t_command *cmd);
+
+// Execusion part , AKA (l3o9oba dyal anani 7mar)
+void    execute_commands(t_shell *shell);
+void	execute_external(t_command *cmd, t_shell *shell);
+char	*find_command_path(char *cmd, t_env *env);
 #endif

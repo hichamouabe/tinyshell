@@ -17,7 +17,7 @@ HEREDOC_DIR = $(SRC_DIR)heredoc/
 PARSER_DIR = $(SRC_DIR)parser/
 SIGNAL_DIR = $(SRC_DIR)signal_handling/
 UTIL_DIR = $(SRC_DIR)utils/
-
+EXEC_DIR = $(SRC_DIR)execusion/
 # Source Files - ALL .c files must be listed here
 SRCS = \
 	$(SHELL_DIR)main.c \
@@ -68,7 +68,10 @@ SRCS = \
 	$(UTIL_DIR)str_stuff2.c \
 	$(UTIL_DIR)str_stuff3.c \
 	$(UTIL_DIR)str_stuff4.c \
-	$(UTIL_DIR)ft_split.c
+	$(UTIL_DIR)ft_split.c \
+	\
+	$(EXEC_DIR)execute.c \
+	$(EXEC_DIR)path.c 
 
 # Object Files - This automatically generates the list of .o files
 OBJS = $(SRCS:.c=.o)
