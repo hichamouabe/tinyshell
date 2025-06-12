@@ -71,7 +71,9 @@ SRCS = \
 	$(UTIL_DIR)ft_split.c \
 	\
 	$(EXEC_DIR)execute.c \
-	$(EXEC_DIR)path.c 
+	$(EXEC_DIR)path.c \
+       	$(EXEC_DIR)exec_1.c \
+	$(EXEC_DIR)builtins_1.c	
 
 # Object Files - This automatically generates the list of .o files
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 04:51:41 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/12 01:45:52 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/12 02:23:58 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,4 +248,9 @@ void	free_commands(t_command *cmd);
 void    execute_commands(t_shell *shell);
 void	execute_external(t_command *cmd, t_shell *shell);
 char	*find_command_path(char *cmd, t_env *env);
+int	execute_builtin(t_command *cmd, t_shell *shell);
+int	is_builtin(char *cmd);
+int	ft_echo(char **args);
+int	ft_pwd(void);
+int	ft_env(t_shell *shell);
 #endif

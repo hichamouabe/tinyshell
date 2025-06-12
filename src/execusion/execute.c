@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 00:57:59 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/12 01:51:33 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/12 02:21:41 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,11 @@ void	execute_commands(t_shell *shell)
 	cmd = shell->commands;
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return ;
+	if (is_builtin(cmd->args[0]))
+	{
+		shell->exit_status = execute_builtin(cmd, shell);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
