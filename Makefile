@@ -69,11 +69,18 @@ SRCS = \
 	$(UTIL_DIR)str_stuff3.c \
 	$(UTIL_DIR)str_stuff4.c \
 	$(UTIL_DIR)ft_split.c \
+	$(UTIL_DIR)ft_atoi.c \
+	$(UTIL_DIR)ft_isdigit.c \
 	\
 	$(EXEC_DIR)execute.c \
 	$(EXEC_DIR)path.c \
        	$(EXEC_DIR)exec_1.c \
-	$(EXEC_DIR)builtins_1.c	
+	$(EXEC_DIR)builtins_1.c	\
+	$(EXEC_DIR)cd.c \
+	$(EXEC_DIR)export.c \
+	$(EXEC_DIR)exit.c \
+	$(EXEC_DIR)unset.c \
+	$(EXEC_DIR)expo_unset_utils.c 
 
 # Object Files - This automatically generates the list of .o files
 OBJS = $(SRCS:.c=.o)

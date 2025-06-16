@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 04:51:41 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/12 02:23:58 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:18:57 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <limits.h>
 
 # define SUCCESS 0
 # define ERROR 1
@@ -230,6 +231,8 @@ void			free_array(char **array);
 char			*ft_strcpy(char *dst, const char *src); // Missing
 char			*ft_strcat(char *dst, const char *src); // Missing
 void			*ft_memcpy(void *dst, const void *src, size_t n); // Missing
+int			ft_isdigit(int c);
+int			ft_atoi(char *str);
 // Heredoc functions
 char	*expand_heredoc_line(char *line, t_shell *shell);
 char	*generate_heredoc_filename(t_shell *shell);
@@ -253,4 +256,12 @@ int	is_builtin(char *cmd);
 int	ft_echo(char **args);
 int	ft_pwd(void);
 int	ft_env(t_shell *shell);
+int	ft_cd(char **args, t_shell *shell);
+int	ft_exit(char **args, t_shell *shell);
+int	is_str_numeric(char *str);
+int	ft_export(char **args, t_shell *shell);
+int	ft_unset(char **args, t_shell *shell);
+int	is_valid_identifier(char *s);
+void	print_export(t_shell *shell);
+void	update_env_var(t_shell *shell, char *key, char *value);
 #endif

@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 02:16:48 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/12 02:20:15 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:00:36 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,13 @@ int	execute_builtin(t_command *cmd, t_shell *shell)
 		return (ft_env(shell));
 	if (ft_strcmp(cmd_name, "echo") == 0)
 		return (ft_echo(cmd->args));
+	if (ft_strcmp(cmd_name, "export") == 0)
+		return (ft_export(cmd->args, shell));
+	if (ft_strcmp(cmd_name, "unset") == 0)
+		return (ft_unset(cmd->args, shell));
+	if (ft_strcmp(cmd_name, "cd") == 0)
+		return (ft_cd(cmd->args, shell));
+	if (ft_strcmp(cmd_name, "exit") == 0)
+		return (ft_exit(cmd->args, shell));
 	return (1);
 }

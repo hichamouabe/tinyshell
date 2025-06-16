@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:09:56 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/06 01:04:36 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:36:34 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	expand_variables(t_shell *shell)
 			cur_token = cur_token->next;
 		}
 		prev_token = cur_token;
-		cur_token = cur_token->next;
+		if (cur_token)
+			cur_token = cur_token->next;
 	}
 }

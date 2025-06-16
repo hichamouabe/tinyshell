@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 01:58:19 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/12 02:15:42 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:04:03 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,23 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
+static int	is_n_flag(const char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (arg[0] != '-' || arg[1] != 'n')
+		return (0);
+	i = 2;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_echo(char **args)
 {
 	int	i;
@@ -60,7 +77,7 @@ int	ft_echo(char **args)
 
 	i = 1;
 	newline_flag = 1;
-	while (args[i] && ft_strcmp(args[i], "-n") == 0)
+	while (args[i] && is_n_flag(args[i]))
 	{
 		newline_flag = 0;
 		i++;
