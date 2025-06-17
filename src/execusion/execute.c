@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 00:57:59 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/12 02:21:41 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:46:43 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,17 @@ void	execute_commands(t_shell *shell)
 {
 	t_command	*cmd;
 	pid_t		pid;
+	int		original_fds[2];
 
 	cmd = shell->commands;
 	if (!cmd || !cmd->args || !cmd->args[0])
+		return (restore_io(original_fds));
+	if (handle_redirections(cmd, original_fds) != 0)
+	{
+		shell->exit_status = 1;
+		restore_io(original_fds);
 		return ;
+	}
 	if (is_builtin(cmd->args[0]))
 	{
 		shell->exit_status = execute_builtin(cmd, shell);
@@ -117,4 +124,5 @@ void	execute_commands(t_shell *shell)
 		if (WIFEXITED(shell->exit_status))
 			shell->exit_status = WEXITSTATUS(shell->exit_status);
 	}
+	restore_io(original_fds);
 }

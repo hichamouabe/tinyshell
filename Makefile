@@ -80,7 +80,8 @@ SRCS = \
 	$(EXEC_DIR)export.c \
 	$(EXEC_DIR)exit.c \
 	$(EXEC_DIR)unset.c \
-	$(EXEC_DIR)expo_unset_utils.c 
+	$(EXEC_DIR)expo_unset_utils.c \
+	$(EXEC_DIR)redirect.c 	
 
 # Object Files - This automatically generates the list of .o files
 OBJS = $(SRCS:.c=.o)

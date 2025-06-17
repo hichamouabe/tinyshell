@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 04:51:41 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/16 14:18:57 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:33:32 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,4 +264,7 @@ int	ft_unset(char **args, t_shell *shell);
 int	is_valid_identifier(char *s);
 void	print_export(t_shell *shell);
 void	update_env_var(t_shell *shell, char *key, char *value);
+
+int	handle_redirections(t_command *cmd, int original_fds[2]);
+void	restore_io(int original_fds[2]);
 #endif
