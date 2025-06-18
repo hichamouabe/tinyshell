@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 00:57:59 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/17 11:46:43 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:56:15 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	execute_external(t_command *cmd, t_shell *shell)
 	exit(126);
 }
 
-void	execute_commands(t_shell *shell)
+void	execute_single_command(t_shell *shell)
 {
 	t_command	*cmd;
 	pid_t		pid;
@@ -107,6 +107,7 @@ void	execute_commands(t_shell *shell)
 	if (is_builtin(cmd->args[0]))
 	{
 		shell->exit_status = execute_builtin(cmd, shell);
+		restore_io(original_fds);
 		return ;
 	}
 	pid = fork();
@@ -125,4 +126,17 @@ void	execute_commands(t_shell *shell)
 			shell->exit_status = WEXITSTATUS(shell->exit_status);
 	}
 	restore_io(original_fds);
+}
+
+void	execute_commands(t_shell *shell)
+{
+	t_command	*cmd;
+
+	cmd = shell->commands;
+	if (!cmd)
+		return ;
+	if (cmd->next == NULL)
+		execute_single_command(shell);
+	else
+		printf("--------pipes called bro");
 }
