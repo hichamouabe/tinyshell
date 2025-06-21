@@ -6,13 +6,13 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 20:28:50 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/05 16:19:40 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:06:23 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	**finalize_expansion(t_expansion_state *state)
+/*char	**finalize_expansion(t_expansion_state *state)
 {
 	if (state->buffer && *state->buffer)
 	{
@@ -22,6 +22,13 @@ char	**finalize_expansion(t_expansion_state *state)
 	else if (state->buffer)
 		free(state->buffer);
 	return (ensure_valid_result(state->result));
+}*/
+
+char	**finalize_expansion(t_expansion_state *state)
+{
+	if (state->buffer)
+		add_segment(&state->result, state->buffer);
+	return (state->result);
 }
 
 int	is_variable_start(char *str, int pos, t_var_info **var_list)

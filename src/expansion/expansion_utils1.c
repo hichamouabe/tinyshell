@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 00:15:30 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/02 00:28:05 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:56:33 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_env_value(char *name, t_shell *shell)
 	t_env	*env;
 
 	if (!name || !shell)
-		return (ft_strdup(""));
+		return (NULL);
 	if (ft_strcmp(name, "?") == 0)
 		return (ft_itoa(shell->exit_status));
 	env = shell->env;
@@ -47,11 +47,11 @@ char	*get_env_value(char *name, t_shell *shell)
 			if (env->value)
 				return (ft_strdup(env->value));
 			else
-				return (ft_strdup(""));
+				return (NULL);
 		}
 		env = env->next;
 	}
-	return (ft_strdup(""));
+	return (NULL);
 }
 
 char	**ensure_valid_result(char **result)

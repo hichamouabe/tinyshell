@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 01:57:51 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/06 01:30:41 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:21:41 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	check_pipe_syntax(t_token *tokens)
 	return (1);
 }
 
-int	check_ambig(t_shell *shell)
+/*int	check_ambig(t_shell *shell)
 {
 	t_token	*current;
 	t_token	*prev;
@@ -84,6 +84,43 @@ int	check_ambig(t_shell *shell)
 			return (ERROR);
 		}
 		prev = current;
+		current = current->next;
+	}
+	return (SUCCESS);
+}*/
+int	check_ambig(t_shell *shell)
+{
+	t_token	*current;
+
+	current = shell->tokens;
+	while (current)
+	{
+		if (is_redirection(current->type))
+		{
+			// Case 1: Redirection at the very end (e.g., "ls >")
+			if (!current->next)
+			{
+				printf("minishell: syntax error near unexpected token `newline'\n");
+				shell->exit_status = 2;
+				return (ERROR);
+			}
+			// Case 2: Filename token is not a WORD (e.g., "ls > |")
+			if (current->next->type != TOKEN_WORD)
+			{
+				printf("minishell: syntax error near unexpected token `%s'\n",
+					current->next->value);
+				shell->exit_status = 2;
+				return (ERROR);
+			}
+			// Case 3: Ambiguous redirect after expansion (e.g., ls > $var where var="a b")
+			// We check if the token after the redirection came from an expansion that produced more than one word.
+			if (current->next->is_from_redir && current->next->next && current->next->next->is_from_redir)
+			{
+				printf("minishell: ambiguous redirect\n");
+				shell->exit_status = 1;
+				return (ERROR);
+			}
+		}
 		current = current->next;
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: houabell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:17:07 by houabell          #+#    #+#             */
-/*   Updated: 2025/06/05 23:21:46 by houabell         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:29:53 by houabell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_command	*parse_tokens(t_shell	*shell)
 		{
 			print_variables(shell->variables);
 			expand_variables(shell);
+			if (!shell->variables)
+				return (NULL);
 			print_tokens(shell->tokens);
 		}
 		if (check_ambig(shell) != SUCCESS)
